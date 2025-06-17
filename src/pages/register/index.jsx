@@ -55,29 +55,13 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!validateForm()) {
-      return;
-    }
-    
-    setIsLoading(true);
-    
     try {
-      const response = await instance.post('/register', formData);
-      
-      alert('Usuário cadastrado com sucesso!');
-      
-      // Limpar formulário após sucesso
-      setFormData({
-        name: '',
-        email: '',
-        password: ''
-      });
-      
+        const response = await instance.post('/users', formData)
+
+        alert("CDASTROUUUUUUUU")
     } catch (error) {
-      console.log(error);
-      alert('Erro ao cadastrar usuário. Tente novamente.');
-    } finally {
-      setIsLoading(false);
+        console.log(error)
+        alert("ERRROUUU!")
     }
   };
 

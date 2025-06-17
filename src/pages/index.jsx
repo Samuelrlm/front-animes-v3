@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import instance from '@/instance/api';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -50,7 +52,8 @@ export default function Login() {
     try {
       const response = await instance.post('/login', formData)
 
-      alert("LOGOUUUUUUUUUUUUUU!")
+      localStorage.setItem('token', response.data.token)
+      router.push('/animes')
     } catch (error) {
       console.log(error)
       alert("ERRROUUU!")
