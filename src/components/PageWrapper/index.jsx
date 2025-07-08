@@ -1,6 +1,6 @@
 import instance from "@/instance/api"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import Header from "../Header"
 
 export default function PageWrapper({children}){
@@ -15,9 +15,15 @@ export default function PageWrapper({children}){
 
         async function heartBeat(){
             try {
-                await instance.get('/heartbeat')
+                const user = await instance.get('/profile')
+
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify(user.data)
+                )
             } catch (error) {
                 localStorage.removeItem('token')
+                localStorage.removeItem('user')
                 router.push('/')
             }
         }
@@ -29,7 +35,7 @@ export default function PageWrapper({children}){
     return (
         <div className="w-full min-h-screen flex flex-col">
             <Header />
-            <div className="w-full h-full pt-[65px] bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen">
+            <div className="w-full h-full pt-[75px] px-8 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen">
                 {children}
             </div>
         </div>
